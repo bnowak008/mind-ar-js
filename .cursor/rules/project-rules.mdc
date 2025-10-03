@@ -1,0 +1,212 @@
+---
+alwaysApply: true
+---
+
+# Project Context: mind-ar
+
+This document provides a thorough analysis of the `mind-ar` project, outlining its purpose, overall structure, technology stack, and core functionalities.
+
+## Purpose
+
+The `mind-ar` is
+
+## Structure
+
+
+## Tech Stack
+
+### Frontend (`src/`)
+
+## Functionality
+
+
+## Development Rules
+
+### ***CRITICAL RULES***
+- All code must be clean, sophisticated, and production ready.
+- Follow clean code principles to make code self-documenting
+- Casting a type to "any" is NOT A VALID SOLUTION!
+- ALWAYS use functions over classes
+- ALWAYS use types over interfaces.
+- NEVER add comments unless explicitly asked too.
+- NEVER add explanatory comments for self-documenting code
+- NEVER add comments that simply restate what the code does
+- Use clear, descriptive variable and function names instead of comments
+
+### Task Execution Rules
+- ALWAYS execute explicitly requested tasks without asking for confirmation
+- NEVER ask if the user wants to do what they've just explicitly requested
+- NEVER list options that were already specified in the user's request
+- Only ask for clarification when:
+  - Critical information is missing
+  - Multiple valid approaches exist and no preference was specified
+  - Potential conflicts or risks need to be addressed
+  - Technical limitations require alternative solutions
+- If a task is clear and complete:
+  - Execute it directly
+  - Provide progress updates
+  - Report completion status
+  - Highlight any relevant outcomes or next steps
+
+### Code Organization
+- Follow bun monorepo structure with apps/ and packages/
+- Maintain clear code separation between all apps and packages
+
+### Performance
+- Implement code splitting
+- Optimize bundle sizes
+- Use proper caching strategies
+- Implement lazy loading where appropriate
+- ensure db operations are optimized and efficient
+
+### Security
+- Follow security best practices
+- Implement proper authentication flows
+- Use RBAC for authorization
+- Sanitize all user inputs
+
+### Documentation
+- Keep documentation up to date
+- Document all APIs
+- Maintain clear code comments
+- Update README files as needed
+
+## File Management Rules
+- Update package.json with proper versioning
+- Maintain clean dependency tree
+- Keep configuration files up to date
+- Follow consistent file naming conventions
+
+## Commit Guidelines
+- Write clear commit messages
+- Reference issues where applicable
+- Keep commits atomic and focused
+- Follow conventional commit format
+
+## Development Process
+- Follow feature branch workflow
+- Implement proper code review process
+- Maintain clean git history
+- Use proper versioning strategy
+
+## Todo File Management Rules (.context/todos/[{task_name}].md)
+
+### CRITICAL: Task Preservation Policy
+- **NEVER DELETE OR REMOVE COMPLETED TASKS** - Tasks are permanent project history
+- **ONLY UPDATE CHECKBOXES** - Change `[ ]` to `[x]` when tasks are completed
+- **PRESERVE ALL TASK DESCRIPTIONS** - Maintain exact wording and details of completed tasks
+- **MAINTAIN TASK HIERARCHY** - Keep sub-tasks and nested items intact when parent tasks complete
+
+### Todo File Structure Requirements
+Each todo file MUST follow this exact format:
+
+# [Category] Todo List
+
+## Description
+Detailed description of this todo category's purpose, including:
+- ALWAYS USE CHECKBOXES for all actionable items
+- What types of tasks belong here
+- How tasks should be tracked
+- When and how to update this file
+- How this category relates to the project
+- Any specific guidelines or requirements
+- Any relevant context about the status of the tasks implementation
+- No pseudo code or implementations. Only detailed steps on how to achieve such things.
+- **CRITICAL: Mark items complete with checkbox when completed. NEVER REMOVE COMPLETED TASKS.**
+- **CRITICAL: Update this todo regularly as tasks and subtasks are completed to insure the projects current state is accurately reflected in this file.**
+
+### Task Status Management
+- **Active Tasks**: `[ ]` - Currently being worked on or ready to start
+- **Completed Tasks**: `[x]` - Finished tasks that MUST remain in the file permanently
+- **Blocked Tasks**: `[?]` - Tasks waiting on dependencies or decisions
+- **Deferred Tasks**: `[-]` - Tasks postponed but not abandoned
+
+### Memory Section Guidelines
+- ALWAYS maintain the Memory section in each todo file
+- UPDATE the Memory section when:
+  - Making significant implementation decisions
+  - Overcoming technical challenges
+  - Discovering future considerations
+  - Gaining new technical insights
+  - Adding or modifying dependencies
+- ENSURE the Memory section:
+  - Provides clear context for future development
+  - Documents rationale behind decisions
+  - Tracks evolution of implementation
+  - Records lessons learned
+  - Notes potential improvements
+- USE the Memory section to:
+  - Aid in knowledge transfer
+  - Support maintenance decisions
+  - Guide future enhancements
+  - Prevent repeated mistakes
+  - Maintain implementation context
+
+### Todo File Organization Structure
+Organize tasks by logical phases and hierarchical breakdown, not by completion status:
+
+## Phase 1: [Phase Name]
+- [ ] Major task or milestone
+  - [ ] Subtask 1
+  - [ ] Subtask 2
+    - [ ] Sub-subtask if needed
+  - [x] Completed subtask
+- [x] Completed major task
+  - [x] All subtasks also marked complete
+  - [x] With completion dates
+
+## Phase 2: [Next Phase Name]
+- [ ] Next major milestone
+  - [ ] Associated subtasks
+- [ ] Additional tasks for this phase
+
+## Phase N: [Future Phase]
+- [ ] Future milestones
+- [ ] Long-term objectives
+
+## Memory
+- Key decisions made during implementation
+- Technical challenges overcome
+- Future considerations discovered
+- Dependencies and architectural choices
+
+### Project Management Integration
+- If the user references any .context/todos/*.md ALWAYS consider them before making changes
+- AUTOMATICALLY update relevant todo files in .context/todos/ when:
+  - Tasks are completed or change status (update checkbox only)
+  - New tasks are identified (add to appropriate section)
+  - Implementation status changes (move between sections if needed)
+  - Technical debt is discovered (add to appropriate section)
+- MAINTAIN separate todo files for different task categories:
+  - .context/todos/feature-name.md - Feature-specific tasks
+  - .context/todos/technical-debt.md - Technical debt and refactoring
+  - .context/todos/bugs.md - Bug tracking and fixes
+  - .context/todos/documentation.md - Documentation tasks
+
+### Todo Update Workflow
+1. **When completing a task**:
+   - Change `[ ]` to `[x]`
+   - Keep task in its original phase/location
+   - Update Memory section with any relevant insights
+
+2. **When adding new tasks**:
+   - Add to appropriate phase section
+   - Use hierarchical structure (tasks → subtasks → sub-subtasks)
+   - Use clear, actionable descriptions
+   - Include context and acceptance criteria
+
+3. **When tasks become blocked**:
+   - Change to `[?]` status
+   - Document blocking issue in task description
+   - Keep task in its original phase location
+
+4. **When tasks are deferred**:
+   - Change to `[-]` status
+   - Document reason for deferral
+   - Keep task in its original phase location
+
+5. **When organizing tasks**:
+   - Group related tasks under logical phases
+   - Use indentation to show task hierarchy
+   - Break down complex tasks into manageable subtasks
+   - Maintain chronological or logical phase ordering
