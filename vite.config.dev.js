@@ -82,19 +82,49 @@ const imageAframeConfig=defineConfig({
 })
 
 export default defineConfig(async ({ command, mode }) => {
-    await fs.rm(outDir,{recursive:true,force:true});
+    // Safer directory cleanup - only remove if it exists and is not the current directory
+    try {
+        const stats = await fs.stat(outDir);
+        if (stats.isDirectory() && path.resolve(outDir) !== process.cwd()) {
+            await fs.rm(outDir, {recursive: true, force: true});
+        }
+    } catch (error) {
+        // Directory doesn't exist, which is fine
+        if (error.code !== 'ENOENT') {
+            console.error('Error cleaning output directory:', error);
+        }
+    }
+
     if (command === 'build') {
+        // Build configs sequentially to avoid race conditions
         await build(imageAframeConfig);
         await build(faceAframeConfig);
-        const files=await fs.readdir(outDir);
-        //rename the aframe builds
-        await Promise.all(files.map(async (filename)=>{
-            if(filename.includes(".iife.js")){
-                const newName=filename.replace(".iife.js",".js");
-                console.log(filename,"->",newName)
-                await fs.rename(path.join(outDir,filename),path.join(outDir,newName));
+        
+        // Safer file renaming with error handling and sequential processing
+        try {
+            const files = await fs.readdir(outDir);
+            // Process files sequentially to avoid race conditions
+            for (const filename of files) {
+                if (filename.includes(".iife.js") && !filename.includes(".iife.js.map")) {
+                    const oldPath = path.join(outDir, filename);
+                    const newName = filename.replace(".iife.js", ".js");
+                    const newPath = path.join(outDir, newName);
+                    
+                    // Check if target file doesn't already exist
+                    try {
+                        await fs.access(newPath);
+                        console.warn(`Skipping rename: ${newName} already exists`);
+                    } catch {
+                        // Target doesn't exist, safe to rename
+                        console.log(filename, "->", newName);
+                        await fs.rename(oldPath, newPath);
+                    }
+                }
             }
-        }));
+        } catch (error) {
+            console.error('Error during file renaming:', error);
+            throw error;
+        }
     }
     return moduleConfig
   })
