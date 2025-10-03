@@ -1,0 +1,11 @@
+node_modules
+dist
+dist-dev
+dist-types
+coverage
+examples
+testing
+custom_tfjs
+package-lock.json
+*.min.js
+*.map

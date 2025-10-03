@@ -3,4 +3,7 @@ tests
 *.swp
 dist-dev
 dist/
+dist-types/
 *.DS_Store
+coverage/
+.vitest-cache/

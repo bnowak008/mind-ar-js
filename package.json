@@ -10,7 +10,15 @@
     "build-dev": "vite build --config vite.config.dev.js",
     "build": "vite build --config vite.config.prod.js",
     "type-check": "tsc --noEmit",
-    "type-gen": "tsc --declaration --emitDeclarationOnly --outDir dist-types"
+    "type-gen": "tsc --declaration --emitDeclarationOnly --outDir dist-types",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src test",
+    "lint:fix": "eslint src test --fix",
+    "format": "prettier --write \"src/**/*.js\" \"test/**/*.js\" \"*.js\" \"*.json\" \"*.md\"",
+    "format:check": "prettier --check \"src/**/*.js\" \"test/**/*.js\" \"*.js\" \"*.json\" \"*.md\""
   },
   "engines": {
     "node": ">=14.0.0"
@@ -52,9 +60,17 @@
     "src/**/*.d.ts"
   ],
   "devDependencies": {
+    "@eslint/js": "^9.36.0",
     "@types/node": "^24.6.2",
     "@types/three": "^0.180.0",
+    "@vitest/ui": "^3.2.4",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "happy-dom": "^19.0.2",
+    "prettier": "^3.6.2",
     "typescript": "^5.9.3",
-    "vite": "^6.3.6"
+    "vite": "^6.3.6",
+    "vitest": "^3.2.4"
   }
 }
