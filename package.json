@@ -3,11 +3,14 @@
   "version": "1.2.5",
   "description": "web augmented reality framework",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "dev": "vite --config vite.config.dev.js --host",
     "watch": "vite build --watch --config vite.config.dev.js",
     "build-dev": "vite build --config vite.config.dev.js",
-    "build": "vite build --config vite.config.prod.js"
+    "build": "vite build --config vite.config.prod.js",
+    "type-check": "tsc --noEmit",
+    "type-gen": "tsc --declaration --emitDeclarationOnly --outDir dist-types"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -44,9 +47,14 @@
   },
   "files": [
     "dist/",
-    "src/"
+    "src/",
+    "index.d.ts",
+    "src/**/*.d.ts"
   ],
   "devDependencies": {
+    "@types/node": "^24.6.2",
+    "@types/three": "^0.180.0",
+    "typescript": "^5.9.3",
     "vite": "^6.3.6"
   }
 }
