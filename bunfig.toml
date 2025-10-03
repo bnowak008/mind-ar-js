@@ -1,0 +1,50 @@
+[install]
+# Use Bun's package manager
+cache = true
+exact = true
+auto = true
+
+[install.scopes]
+# Configure scoped packages
+"@mind-ar" = "file:./packages"
+
+[run]
+# Configure Bun runtime
+bun = true
+hot = true
+watch = true
+
+[test]
+# Configure testing
+preload = ["./tests/setup.ts"]
+timeout = 30000
+coverage = true
+
+[build]
+# Configure Bun bundler
+target = "browser"
+format = "esm"
+minify = false
+sourcemap = "inline"
+
+# Ignore wildcard sideEffects warnings from dependencies
+ignoreDCEAnnotations = true
+
+# Configure external dependencies to prevent bundling issues
+external = [
+  "three", 
+  "three/examples/jsm/*",
+  "@tensorflow/tfjs",
+  "@tensorflow/tfjs-backend-webgl",
+  "@tensorflow/tfjs-backend-webgpu",
+  "@mediapipe/tasks-vision"
+]
+
+# Optimize for Bun.js native features
+splitting = true
+treeShaking = true
+deadCodeElimination = true
+
+# Performance optimizations
+cache = true
+incremental = true

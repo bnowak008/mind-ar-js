@@ -1,0 +1,1 @@
+Remember update the todo file of the current todo we are working on regularly as you make progress. All work must be of world class production quality.

@@ -1,5 +1,4 @@
 import {CompilerBase} from './compiler-base.js'
-import CompilerWorker  from "./compiler.worker.js?worker&inline";
 
 export class Compiler extends CompilerBase {
   createProcessCanvas(img) {
@@ -11,7 +10,7 @@ export class Compiler extends CompilerBase {
 
   compileTrack({progressCallback, targetImages, basePercent}) {
     return new Promise((resolve, reject) => {
-      const worker = new CompilerWorker();
+      const worker = new Worker(new URL('./compiler.worker.js', import.meta.url));
       worker.onmessage = (e) => {
         if (e.data.type === 'progress') {
           progressCallback(basePercent + e.data.percent * basePercent/100);

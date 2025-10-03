@@ -1,4 +1,4 @@
-import {cv} from './opencv.js'
+import cv from '@techstark/opencv-js'
 let initialized = false;
 
 const _cv = {};

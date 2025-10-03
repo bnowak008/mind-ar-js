@@ -1,0 +1,28 @@
+{
+  "name": "@mind-ar/examples",
+  "version": "1.2.5",
+  "description": "MindAR Examples and Demos",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --bun serve --port 2020",
+    "serve": "bun run --bun serve --port 2020",
+    "build": "echo 'Examples are static files, no build needed'",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@mind-ar/core": "workspace:*",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "@types/three": "^0.160.0"
+  },
+  "keywords": [
+    "web AR",
+    "examples",
+    "demos",
+    "augmented reality"
+  ],
+  "author": "hiukim",
+  "license": "MIT"
+}

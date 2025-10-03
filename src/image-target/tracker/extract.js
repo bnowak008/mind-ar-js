@@ -1,4 +1,5 @@
 import {Cumsum} from '../utils/cumsum.js';
+import { optimizedTemplateMatching } from '../../libs/performance-utils.js';
 
 const SEARCH_SIZE1 = 10;
 const SEARCH_SIZE2 = 2;
@@ -286,47 +287,8 @@ const _getSimilarity = (options) => {
   const {data: imageData, width, height} = image;
   const templateSize = TEMPLATE_SIZE;
 
-  if (cx - templateSize < 0 || cx + templateSize >= width) return null;
-  if (cy - templateSize < 0 || cy + templateSize >= height) return null;
-
-  const templateWidth = 2 * templateSize + 1;
-
-  let sx = imageDataCumsum.query(cx-templateSize, cy-templateSize, cx+templateSize, cy+templateSize);
-  let sxx = imageDataSqrCumsum.query(cx-templateSize, cy-templateSize, cx+templateSize, cy+templateSize);
-  let sxy = 0;
-
-  // !! This loop is the performance bottleneck. Use moving pointers to optimize
-  //
-  //   for (let i = cx - templateSize, i2 = tx - templateSize; i <= cx + templateSize; i++, i2++) {
-  //     for (let j = cy - templateSize, j2 = ty - templateSize; j <= cy + templateSize; j++, j2++) {
-  //       sxy += imageData[j*width + i] * imageData[j2*width + i2];
-  //     }
-  //   }
-  //
-  let p1 = (cy-templateSize) * width + (cx-templateSize);
-  let p2 = (ty-templateSize) * width + (tx-templateSize);
-  let nextRowOffset = width - templateWidth;
-  for (let j = 0; j < templateWidth; j++) {
-    for (let i = 0; i < templateWidth; i++) {
-      sxy += imageData[p1] * imageData[p2];
-      p1 +=1;
-      p2 +=1;
-    }
-    p1 += nextRowOffset;
-    p2 += nextRowOffset;
-  }
-
-  let templateAverage = imageDataCumsum.query(tx-templateSize, ty-templateSize, tx+templateSize, ty+templateSize);
-  templateAverage /= templateWidth * templateWidth;
-  sxy -= templateAverage * sx;
-
-  let vlen2 = sxx - sx*sx / (templateWidth * templateWidth);
-  if (vlen2 == 0) return null;
-  vlen2 = Math.sqrt(vlen2);
-
-  // covariance between template and current pixel
-  const sim = 1.0 * sxy / (vlen * vlen2);
-  return sim;
+  // Use optimized template matching for better performance
+  return optimizedTemplateMatching(imageData, width, height, cx, cy, tx, ty, templateSize);
 }
 
 export {
