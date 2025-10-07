@@ -2,7 +2,14 @@ import TinyQueue from 'tinyqueue';
 import {compute as hammingCompute} from './hamming-distance.js';
 import {computeHoughMatches} from './hough.js';
 import {computeHomography} from './ransacHomography.js';
-import {multiplyPointHomographyInhomogenous, matrixInverse33} from '../utils/geometry.js';
+import {solveHomography} from '../utils/homography.ts';
+import {
+  matrixInverse33,
+  matrixMul33,
+  multiplyPointHomographyInhomogenous,
+  checkFourPointsConsistent,
+  determinant
+} from '../utils/geometry.ts';
 
 const INLIER_THRESHOLD = 3;
 //const MIN_NUM_INLIERS = 8;  //default

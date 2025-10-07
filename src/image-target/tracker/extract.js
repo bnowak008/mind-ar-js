@@ -1,4 +1,4 @@
-import {Cumsum} from '../utils/cumsum.js';
+import {cumsum} from '../utils/cumsum.ts';
 
 const SEARCH_SIZE1 = 10;
 const SEARCH_SIZE2 = 2;
@@ -115,8 +115,8 @@ const extract = (image) => {
   for (let i = 0; i < imageData.length; i++) {
     imageDataSqr[i] = imageData[i] * imageData[i];
   }
-  const imageDataCumsum = new Cumsum(imageData, width, height);
-  const imageDataSqrCumsum = new Cumsum(imageDataSqr, width, height);
+  const imageDataCumsum = cumsum(imageData, width, height);
+  const imageDataSqrCumsum = cumsum(imageDataSqr, width, height);
 
   // holds the max similariliy value computed within SEARCH area of each pixel
   //   idea: if there is high simliarity with another pixel in nearby area, then it's not a good feature point
