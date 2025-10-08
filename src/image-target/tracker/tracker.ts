@@ -1,27 +1,27 @@
 import * as tf from '@tensorflow/tfjs';
 import {buildModelViewProjectionTransform, computeScreenCoordiate} from '../estimation/utils.js';
 
-type TrackingData = {
+export type TrackingData = {
   points: Array<{x: number, y: number}>;
   width: number;
   height: number;
   scale: number;
   data: Float32Array;
 }[];
-type TrackingFrame = {
+export type TrackingFrame = {
   points: Array<{x: number, y: number}>;
   width: number;
   height: number;
   scale: number;
   data: Float32Array;
 };
-type KernelProgram = {
+export type KernelProgram = {
   variableNames: string[];
   outputShape: number[];
   userCode: string;
 };
 
-type KernelCache = {
+export type KernelCache = {
   computeMatching?: KernelProgram[];
   computeProjection?: Record<string, KernelProgram>;
 };
@@ -407,7 +407,12 @@ class Tracker {
   }
 
   _compileAndRun(program: KernelProgram, inputs: tf.Tensor[]) {
-    return tf.engine().runKernel(program, inputs);
+    const namedInputs: tf.NamedTensorMap = {};
+    program.variableNames.forEach((name, index) => {
+      namedInputs[name] = inputs[index];
+    });
+    const result = tf.engine().runKernel('CustomKernel', namedInputs, program);
+    return Array.isArray(result) ? result[0] : result;
   }
 }
 

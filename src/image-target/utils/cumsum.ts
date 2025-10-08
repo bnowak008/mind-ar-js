@@ -22,3 +22,5 @@ export const cumsum = (data: number[][], width: number, height: number) => {
     },
   };
 };
+
+export type Cumsum = ReturnType<typeof cumsum>;

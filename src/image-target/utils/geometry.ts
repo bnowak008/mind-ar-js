@@ -110,4 +110,5 @@ export {
   checkThreePointsConsistent,
   checkFourPointsConsistent,
   determinant,
+  type Matrix33,
 };

@@ -31,3 +31,5 @@ const createRandomizer = () => {
 export {
   createRandomizer
 }
+
+export type Randomizer = ReturnType<typeof createRandomizer>;
