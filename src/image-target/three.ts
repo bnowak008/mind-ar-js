@@ -4,13 +4,14 @@ import * as tf from '@tensorflow/tfjs';
 import {CSS3DRenderer} from 'three/examples/jsm/renderers/CSS3DRenderer.js'
 import { Controller } from "./controller.js";
 import { UI } from "../ui/ui.js";
+import type { Anchor } from '../types';
 
 const cssScaleDownMatrix = new Matrix4();
 cssScaleDownMatrix.compose(new Vector3(), new Quaternion(), new Vector3(0.001, 0.001, 0.001));
 
 const invisibleMatrix = new Matrix4().set(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1);
 
-interface Anchor {
+interface ImageAnchor {
   group: Group;
   targetIndex: number;
   onTargetFound: (() => void) | null;
@@ -37,7 +38,7 @@ export class MindARThree {
   renderer: WebGLRenderer;
   cssRenderer: CSS3DRenderer;
   camera: PerspectiveCamera;
-  anchors: Anchor[];
+  anchors: ImageAnchor[];
   video!: HTMLVideoElement;
   controller!: any; //Controller;
   postMatrixs!: Matrix4[];
@@ -116,7 +117,7 @@ export class MindARThree {
     const group = new Group();
     group.visible = false;
     group.matrixAutoUpdate = false;
-    const anchor: Anchor = { group, targetIndex, onTargetFound: null, onTargetLost: null, onTargetUpdate: null, css: false, visible: false };
+    const anchor: ImageAnchor = { group, targetIndex, onTargetFound: null, onTargetLost: null, onTargetUpdate: null, css: false, visible: false };
     this.anchors.push(anchor);
     this.scene.add(group);
     return anchor;
@@ -126,7 +127,7 @@ export class MindARThree {
     const group = new Group();
     group.visible = false;
     group.matrixAutoUpdate = false;
-    const anchor: Anchor = { group, targetIndex, onTargetFound: null, onTargetLost: null, onTargetUpdate: null, css: true, visible: false };
+    const anchor: ImageAnchor = { group, targetIndex, onTargetFound: null, onTargetLost: null, onTargetUpdate: null, css: true, visible: false };
     this.anchors.push(anchor);
     this.cssScene.add(group);
     return anchor;
@@ -236,7 +237,7 @@ export class MindARThree {
               }
             }
 
-            let isAnyVisible = this.anchors.reduce((acc: boolean, anchor: Anchor) => {
+            let isAnyVisible = this.anchors.reduce((acc: boolean, anchor: ImageAnchor) => {
               return acc || anchor.visible;
             }, false);
             if (isAnyVisible) {

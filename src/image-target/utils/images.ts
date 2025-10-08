@@ -1,8 +1,4 @@
-export type ImageData = {
-  width: number;
-  height: number;
-  data: Float32Array;
-};
+import type { ImageData } from '../../types';
 
 // simpler version of upsampling. better performance
 const _upsampleBilinear = ({image, padOneWidth, padOneHeight}: {image: ImageData, padOneWidth: boolean, padOneHeight: boolean}) => {
@@ -117,5 +113,8 @@ export {
   downsampleBilinear,
   upsampleBilinear,
   resize,
-}
+};
+
+// Re-export types for backward compatibility
+export type { ImageData } from '../../types';
 

@@ -1,13 +1,13 @@
 import { Matcher } from './matching/matcher.js';
 import { Estimator } from './estimation/estimator.js';
 
-let projectionTransform = null;
-let matchingDataList = null;
+let projectionTransform: number[][] | null = null;
+let matchingDataList: any[] | null = null;
 let debugMode = false;
-let matcher = null;
-let estimator = null;
+let matcher: Matcher | null = null;
+let estimator: Estimator | null = null;
 
-onmessage = (msg) => {
+onmessage = (msg: MessageEvent) => {
   const { data } = msg;
 
   switch (data.type) {
@@ -20,6 +20,10 @@ onmessage = (msg) => {
       break;
 
     case "match":
+      if (!matcher || !estimator) {
+        throw new Error('Matcher or estimator not initialized');
+      }
+      
       const interestedTargetIndexes = data.targetIndexes;
 
       let matchedTargetIndex = -1;
@@ -29,11 +33,11 @@ onmessage = (msg) => {
       for (let i = 0; i < interestedTargetIndexes.length; i++) {
         const matchingIndex = interestedTargetIndexes[i];
 
-        const { keyframeIndex, screenCoords, worldCoords, debugExtra } = matcher.matchDetection(matchingDataList[matchingIndex], data.featurePoints);
+        const { keyframeIndex, screenCoords, worldCoords, debugExtra } = matcher.matchDetection(matchingDataList?.[matchingIndex], data.featurePoints);
         matchedDebugExtra = debugExtra;
 
-        if (keyframeIndex !== -1) {
-          const modelViewTransform = estimator.estimate({ screenCoords, worldCoords });
+        if (keyframeIndex !== -1 && screenCoords && worldCoords) {
+          const modelViewTransform = estimator.estimate({ screenCoords, worldCoords, projectionTransform: projectionTransform! });
 
           if (modelViewTransform) {
             matchedTargetIndex = matchingIndex;
@@ -53,7 +57,7 @@ onmessage = (msg) => {
 
     case 'trackUpdate':
       const { modelViewTransform, worldCoords, screenCoords } = data;
-      const finalModelViewTransform = estimator.refineEstimate({ initialModelViewTransform: modelViewTransform, worldCoords, screenCoords });
+      const finalModelViewTransform = estimator?.refineEstimate({ initialModelViewTransform: modelViewTransform, worldCoords, screenCoords, projectionTransform: projectionTransform! });
       postMessage({
         type: 'trackUpdateDone',
         modelViewTransform: finalModelViewTransform,

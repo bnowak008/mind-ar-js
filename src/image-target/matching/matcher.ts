@@ -1,28 +1,6 @@
 import {match} from './matching';
 import {type ClusterNode} from './hierarchical-clustering';
-
-export type Point = {
-  x: number;
-  y: number;
-  scale?: number;
-  angle?: number;
-  descriptors?: number[];
-  maxima?: boolean;
-};
-
-export type Match = {
-  querypoint: Point;
-  keypoint: Point;
-};
-
-export type DebugExtra = {
-  matches?: Match[];
-  houghMatches?: Match[];
-  inlierMatches?: Match[];
-  matches2?: Match[];
-  houghMatches2?: Match[];
-  inlierMatches2?: Match[];
-};
+import type { Point, Match, DebugExtra } from '../../types';
 
 class Matcher {
   queryWidth: number;

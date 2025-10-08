@@ -1,17 +1,5 @@
 import { Matrix, inverse } from "ml-matrix";
-
-type Point2D = [number, number];
-type Matrix33 = [
-  number, number, number,
-  number, number, number,
-  number, number, number
-];
-
-type NormalizationParams = {
-  meanX: number;
-  meanY: number;
-  s: number;
-};
+import type { Point2D, Matrix33, NormalizationParams } from '../../types';
 
 const solveHomography = (srcPoints: Point2D[], dstPoints: Point2D[]): Matrix33 | null => {
   const { normPoints: normSrcPoints, param: srcParam } = _normalizePoints(srcPoints);

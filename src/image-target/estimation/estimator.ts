@@ -1,29 +1,6 @@
 import {estimate} from './estimate';
 import {refineEstimate} from './refine-estimate';
-
-type Point2D = {
-  x: number;
-  y: number;
-};
-
-type Point3D = {
-  x: number;
-  y: number;
-  z: number;
-};
-
-type ModelViewTransform = number[][];
-
-type EstimateParams = {
-  screenCoords: Point2D[];
-  worldCoords: Point2D[];
-};
-
-type RefineEstimateParams = {
-  initialModelViewTransform: ModelViewTransform;
-  worldCoords: Point3D[];
-  screenCoords: Point2D[];
-};
+import type { Point2DObject, Point3D, ModelViewTransform, EstimateParams, RefineEstimateParams } from '../../types';
 
 class Estimator {
   private projectionTransform: number[][];

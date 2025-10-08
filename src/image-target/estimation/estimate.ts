@@ -1,18 +1,6 @@
 import {Matrix, inverse} from 'ml-matrix';
 import {solveHomography} from '../utils/homography';
-
-type Point2D = {
-  x: number;
-  y: number;
-};
-
-type EstimateParams = {
-  screenCoords: Point2D[];
-  worldCoords: Point2D[];
-  projectionTransform: number[][];
-};
-
-type ModelViewTransform = number[][];
+import type { Point2DObject, EstimateParams, ModelViewTransform } from '../../types';
 
 // build world matrix with list of matching worldCoords|screenCoords
 //

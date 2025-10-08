@@ -4,13 +4,8 @@ import {CSS3DRenderer} from 'three/examples/jsm/renderers/CSS3DRenderer.js'
 import { Controller } from "./controller.js";
 import { UI } from "../ui/ui.js";
 import {BufferGeometry,BufferAttribute} from "three";
+import type { Anchor } from '../types';
 const THREE={BufferGeometry,BufferAttribute};
-
-interface Anchor {
-  group: Group;
-  landmarkIndex: number;
-  css: boolean;
-}
 
 export class MindARThree {
   container: HTMLElement;

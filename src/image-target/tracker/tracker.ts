@@ -1,30 +1,6 @@
 import * as tf from '@tensorflow/tfjs';
 import {buildModelViewProjectionTransform, computeScreenCoordiate} from '../estimation/utils.js';
-
-export type TrackingData = {
-  points: Array<{x: number, y: number}>;
-  width: number;
-  height: number;
-  scale: number;
-  data: Float32Array;
-}[];
-export type TrackingFrame = {
-  points: Array<{x: number, y: number}>;
-  width: number;
-  height: number;
-  scale: number;
-  data: Float32Array;
-};
-export type KernelProgram = {
-  variableNames: string[];
-  outputShape: number[];
-  userCode: string;
-};
-
-export type KernelCache = {
-  computeMatching?: KernelProgram[];
-  computeProjection?: Record<string, KernelProgram>;
-};
+import type { TrackingData, TrackingFrame, KernelProgram, KernelCache } from '../../types';
 
 const AR2_DEFAULT_TS = 6;
 const AR2_DEFAULT_TS_GAP = 1;

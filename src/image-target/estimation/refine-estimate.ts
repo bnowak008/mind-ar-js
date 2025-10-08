@@ -1,35 +1,14 @@
 import {Matrix, inverse} from 'ml-matrix';
 import { applyModelViewProjectionTransform, buildModelViewProjectionTransform, computeScreenCoordiate} from './utils';
-
-type Point2D = {
-  x: number;
-  y: number;
-};
-
-type Point3D = {
-  x: number;
-  y: number;
-  z: number;
-};
-
-type ModelViewTransform = number[][];
-
-type ProjectionTransform = number[][];
-
-type RefineEstimateParams = {
-  initialModelViewTransform: ModelViewTransform;
-  projectionTransform: ProjectionTransform;
-  worldCoords: Point3D[];
-  screenCoords: Point2D[];
-};
-
-type ICPParams = {
-  initialModelViewTransform: ModelViewTransform;
-  projectionTransform: ProjectionTransform;
-  worldCoords: Point3D[];
-  screenCoords: Point2D[];
-  inlierProb: number;
-};
+import type { 
+  Point2DObject, 
+  Point3D, 
+  ModelViewTransform, 
+  ProjectionTransform, 
+  RefineEstimateParams, 
+  ICPParams, 
+  ICPResult 
+} from '../../types';
 
 type UpdateModelViewParams = {
   modelViewTransform: ModelViewTransform;
@@ -46,11 +25,6 @@ type GetJUSParams = {
   modelViewTransform: ModelViewTransform;
   projectionTransform: ProjectionTransform;
   worldCoord: Point3D;
-};
-
-type ICPResult = {
-  modelViewTransform: ModelViewTransform;
-  err: number;
 };
 
 const TRACKING_THRESH = 5.0; // default

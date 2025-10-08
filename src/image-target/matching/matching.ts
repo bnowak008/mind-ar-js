@@ -12,31 +12,11 @@ import {
 } from '../utils/geometry';
 import {type Matrix33} from '../utils/geometry';
 import {type ClusterNode} from './hierarchical-clustering';
-import {type Match, type DebugExtra, Point} from './matcher';
-
-type PointWithScaleAndAngle = Point & {
-  scale: number;
-  angle: number;
-};
+import type { Point, Match, DebugExtra, Keyframe, MatchResult, PointWithScaleAndAngle } from '../../types';
 
 // Type guard to check if a point has scale and angle properties
 const hasScaleAndAngle = (point: Point): point is PointWithScaleAndAngle => {
   return point.scale !== undefined && point.angle !== undefined;
-};
-
-type Keyframe = {
-  width: number;
-  height: number;
-  maximaPoints: {x: number, y: number, descriptors: number[]}[];
-  minimaPoints: {x: number, y: number, descriptors: number[]}[];
-  maximaPointsCluster: {rootNode: ClusterNode};
-  minimaPointsCluster: {rootNode: ClusterNode};
-};
-
-type MatchResult = {
-  H?: Matrix33;
-  matches?: Match[];
-  debugExtra: DebugExtra;
 };
 
 const INLIER_THRESHOLD = 3;

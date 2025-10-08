@@ -1,11 +1,12 @@
 import {memory,nextFrame, Tensor} from '@tensorflow/tfjs';
 
 const tf = {memory,nextFrame};
-import {Tracker} from './tracker/tracker.js';
-import {CropDetector} from './detector/crop-detector.js';
-import {Compiler} from './compiler.js';
-import {InputLoader} from './input-loader.js';
-import {OneEuroFilter} from 'one-euro-filter';
+import {Tracker} from './tracker/tracker';
+import {CropDetector} from './detector/crop-detector';
+import {Compiler} from './compiler';
+import {InputLoader} from './input-loader';
+import {OneEuroFilter} from '../libs/one-euro-filter';
+import type { TrackingState } from '../types';
 
 const DEFAULT_FILTER_CUTOFF = 0.001; // 1Hz. time period in milliseconds
 const DEFAULT_FILTER_BETA = 1000;
@@ -13,16 +14,6 @@ const DEFAULT_WARMUP_TOLERANCE = 5;
 const DEFAULT_MISS_TOLERANCE = 5;
 
 type Input = HTMLVideoElement | HTMLImageElement;
-
-interface TrackingState {
-  showing: boolean;
-  isTracking: boolean;
-  currentModelViewTransform: number[][] | null;
-  trackCount: number;
-  trackMiss: number;
-  filter: OneEuroFilter;
-  trackingMatrix: number[] | null;
-}
 
 class Controller {
   inputWidth: number;
@@ -119,12 +110,12 @@ class Controller {
     return new Promise(async (resolve, reject) => {
       const content = await fetch(fileURL);
       const buffer = await content.arrayBuffer();
-      const result = this.addImageTargetsFromBuffer(buffer);
+      const result = this.addImageTargetsFromBuffer(new Uint8Array(buffer));
       resolve(result);
     });
   }
 
-  addImageTargetsFromBuffer(buffer: ArrayBuffer) {
+  addImageTargetsFromBuffer(buffer: Uint8Array<ArrayBufferLike>) {
     const compiler = new Compiler();
     const dataList = compiler.importData(buffer);
 

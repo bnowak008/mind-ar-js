@@ -1,9 +1,4 @@
-type Point2D = [number, number];
-type Matrix33 = [
-  number, number, number,
-  number, number, number,
-  number, number, number
-];
+import type { Point2D, Matrix33 } from '../../types';
 
 const linePointSide = (A: Point2D, B: Point2D, C: Point2D): number => {
   return (B[0] - A[0]) * (C[1] - A[1]) - (B[1] - A[1]) * (C[0] - A[0]);
@@ -110,5 +105,7 @@ export {
   checkThreePointsConsistent,
   checkFourPointsConsistent,
   determinant,
-  type Matrix33,
 };
+
+// Re-export types for backward compatibility
+export type { Matrix33 } from '../../types';

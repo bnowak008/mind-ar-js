@@ -6,14 +6,23 @@ import * as tf from '@tensorflow/tfjs';
 // This implementation return grey scale instead of RGBA in the orignal implementation 
 
 class InputLoader {
-  constructor(width, height) {
+  width: number;
+  height: number;
+  texShape: number[];
+  context: CanvasRenderingContext2D | null;
+  program: any;
+  tempPixelHandle: any;
+
+  constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
     this.texShape = [height, width];
 
     const context = document.createElement('canvas').getContext('2d');
-    context.canvas.width = width;
-    context.canvas.height = height;
+    if (context) {
+      context.canvas.width = width;
+      context.canvas.height = height;
+    }
     this.context = context;
 
     this.program = this.buildProgram(width, height);

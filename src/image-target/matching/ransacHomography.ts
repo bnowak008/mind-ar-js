@@ -2,15 +2,9 @@ import {Matrix, inverse} from 'ml-matrix';
 import {createRandomizer} from '../utils/randomizer';
 import {quadrilateralConvex, matrixInverse33, smallestTriangleArea, multiplyPointHomographyInhomogenous, checkThreePointsConsistent, checkFourPointsConsistent, determinant, type Matrix33} from '../utils/geometry';
 import {solveHomography} from '../utils/homography';
+import type { Point2D, HomographyOptions } from '../../types';
 
-type Point2D = [number, number];
 type Keyframe = { width: number; height: number };
-type HomographyOptions = {
-  srcPoints: Point2D[];
-  dstPoints: Point2D[];
-  keyframe: Keyframe;
-  quickMode?: boolean;
-};
 type Hypothesis = {
   H: Matrix33;
   cost: number;

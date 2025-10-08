@@ -26,7 +26,14 @@ const FREAK_EXPANSION_FACTOR = 7.0;
 const FREAK_CONPARISON_COUNT = (FREAKPOINTS.length - 1) * (FREAKPOINTS.length) / 2; // 666
 
 class Detector {
-	constructor(width, height, debugMode = false) {
+	debugMode: boolean;
+	width: number;
+	height: number;
+	numOctaves: number;
+	tensorCaches: any;
+	kernelCaches: any;
+
+	constructor(width: number, height: number, debugMode = false) {
 		this.debugMode = debugMode;
 		this.width = width;
 		this.height = height;
